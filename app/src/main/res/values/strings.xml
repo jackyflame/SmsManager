@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">短信助手</string>
+
+    <string name="tab_home_menue">首页</string>
+    <string name="tab_sms_menue">短信</string>
+    <string name="tab_user_menue">个人</string>
+
+</resources>
