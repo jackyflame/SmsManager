@@ -2,6 +2,7 @@ package com.jf.smsmanger.vm.main
 
 import android.databinding.Bindable
 import com.jf.baselibraray.event.HttpEvent
+import com.jf.baselibraray.log.LogW
 import com.jf.baselibraray.net.retrofit.ReqCallback
 import com.jf.smsmanger.base.vm.BaseVM
 import com.jf.smsmanger.db.MainPresent
@@ -21,10 +22,17 @@ class MainVM(private var mActivity: MainActivity): BaseVM<MainPresent>(MainPrese
 
     init{
         this.mActivity = mActivity
-        mPresent?.readSmsToDb(object :ReqCallback<Boolean>{
+
+        LogW.i("------------------------->>>> total: ${mPresent?.getSmsTotal()}")
+
+        mPresent?.readSmsToDb(object :ReqCallback<Int>{
             override fun onReqStart() { }
-            override fun onNetResp(response: Boolean?) {
-                RxToast.success("读取短信成功")
+            override fun onNetResp(response: Int?) {
+                if(response == null || response <= 0){
+                    RxToast.error("读取短信失败")
+                }else{
+                    RxToast.success("读取短信成功$response")
+                }
             }
             override fun onReqError(httpEvent: HttpEvent?) {
                 RxToast.error("读取短信失败")

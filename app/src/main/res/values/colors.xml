@@ -20,12 +20,12 @@
     <color name="brown">#744517</color>
     <color name="brown_normal">#cd7f5c</color>
 
-    <color name="text_tab_selected">#C16C45</color>
     <color name="text_black_gray">#676767</color>
     <color name="text_brown">@color/brown_normal</color>
     <color name="text_green">#549d4d</color>
     <color name="text_red">#d53c3c</color>
     <color name="text_blue">#87CEFF</color>
+    <color name="text_tab_selected">@color/text_blue</color>
 
     <color name="diver">#F9F9F9</color>
     <color name="diver_dark">#cecece</color>

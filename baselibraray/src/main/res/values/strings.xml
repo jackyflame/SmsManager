@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">baselibraray</string>
+
+    <string name="errordialog_authority">应用权限不足%1$s，请前往系统设置开放权限</string>
+    <string name="errordialog_title">警告</string>
+    <string name="errordialog_permission">授权</string>
+    <string name="errordialog_ignore">继续使用</string>
+
 </resources>

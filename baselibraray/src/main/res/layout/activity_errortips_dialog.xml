@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/lin_bg"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:background="@color/transparent"
+              android:paddingLeft="@dimen/dp_15"
+              android:paddingRight="@dimen/dp_15"
+              android:gravity="center"
+              tools:context=".view.ErrorDailogActivity">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/dialog_bg_white"
+            android:padding="@dimen/dp_15"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                tools:text="这是提醒内容"
+                android:textSize="@dimen/text_13"
+                android:textColor="@color/dialog_text_black_light"
+                android:id="@+id/txv_tips"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_7"
+                    tools:text="取消"
+                    android:textColor="@color/dialog_text_primary"
+                    android:textSize="@dimen/text_13"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/button_ignore"/>
+
+            <TextView
+                    android:id="@+id/button_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_7"
+                    tools:text="确定"
+                    android:textColor="@color/dialog_text_primary"
+                    android:textSize="@dimen/text_13"
+                    android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

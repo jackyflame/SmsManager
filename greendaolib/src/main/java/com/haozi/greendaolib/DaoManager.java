@@ -2,6 +2,7 @@ package com.haozi.greendaolib;
 
 import android.content.Context;
 
+import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 /**
@@ -14,7 +15,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 public class DaoManager {
 
     private static final String TAG = DaoManager.class.getSimpleName();
-    private static final String DB_NAME = "zxwl_db";
+    private static final String DB_NAME = "smsmanger_db";
 
     private Context context;
 
@@ -43,7 +44,8 @@ public class DaoManager {
     public DaoMaster getDaoMaster(){
         if(sDaoMaster == null) {
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
-            sDaoMaster = new DaoMaster(helper.getWritableDatabase());
+            //Database database = helper.getEncryptedWritableDb("666666");
+            sDaoMaster = new DaoMaster(helper.getWritableDb());
         }
         return sDaoMaster;
     }

@@ -3,6 +3,7 @@ package com.jf.smsmanger.db
 import com.haozi.greendaolib.DaoManager
 import com.haozi.greendaolib.SmsOrginEntity
 import com.haozi.greendaolib.SmsOrginEntityDao
+import com.jf.baselibraray.log.LogW
 
 /**
  * Created by Android Studio.
@@ -19,6 +20,10 @@ class DBHelper private constructor() {
 
     companion object {
         val instance: DBHelper by lazy { Holder.INSTANCE }
+    }
+
+    fun getSmsTotal():Long{
+        return DaoManager.getInstance().daoSession.smsOrginEntityDao.queryBuilder().count()
     }
 
     fun getSmsOrgin(time:Long,content:String?,person:Int,strAddress:String?):SmsOrginEntity?{
@@ -44,6 +49,12 @@ class DBHelper private constructor() {
         if(cache == null){
             return
         }
-        DaoManager.getInstance().daoSession.insertOrReplace(cache)
+        try{
+            DaoManager.getInstance().daoSession.insertOrReplace(cache)
+            LogW.e("[DB] saveSmsOrigin success")
+        }catch (e:Exception){
+            LogW.e("[DB] saveSmsOrigin error:${e.message}")
+        }
+
     }
 }

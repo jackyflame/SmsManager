@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.jf.baselibraray"/>
+          package="com.jf.baselibraray">
+
+    <application>
+
+        <activity android:name=".view.ErrorDailogActivity"
+                  android:label="@string/errordialog_title"
+                  android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+
+    </application>
+
+</manifest>

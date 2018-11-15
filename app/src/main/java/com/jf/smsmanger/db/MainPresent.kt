@@ -5,17 +5,19 @@ import com.jf.baselibraray.db.BasePresent
 import com.jf.baselibraray.db.WeakAsyncTask
 import com.jf.baselibraray.log.LogW
 import com.jf.baselibraray.net.retrofit.ReqCallback
+import com.jf.baselibraray.uitls.PermissionUtil
+import com.jf.baselibraray.view.ErrorDailogActivity
 import com.jf.smsmanger.utils.SmsUtils
 import com.vondear.rxtool.RxTimeTool
 
 class MainPresent : BasePresent(){
 
-    fun readSmsToDb(callback: ReqCallback<Boolean>){
-        object : WeakAsyncTask<String, Void, Boolean, ReqCallback<Boolean>>(callback) {
-            override fun doInBackground(target: ReqCallback<Boolean>, vararg params: String?): Boolean {
+    fun readSmsToDb(callback: ReqCallback<Int>){
+        object : WeakAsyncTask<String, Void, Int, ReqCallback<Int>>(callback) {
+            override fun doInBackground(target: ReqCallback<Int>, vararg params: String?): Int {
+                var readCount = 0
                 try{
                     SmsUtils.getSmsCursor()?.let {
-                        var readCount = 0
                         while(it.moveToNext()){
                             val index_Address = it.getColumnIndex("address")
                             val index_Person = it.getColumnIndex("person")
@@ -29,7 +31,7 @@ class MainPresent : BasePresent(){
                             val longDate = it.getLong(index_Date)
                             val intType = it.getInt(index_Type)
                             //写入数据库
-                            var sms:SmsOrginEntity? = DBHelper.instance.getSmsOrgin(longDate,strbody,intPerson,strAddress)
+                            var sms:SmsOrginEntity? = DBHelper.instance.getSmsOrgin(longDate,null,0,null)
                             if(sms == null){
                                 sms = SmsOrginEntity()
                                 sms.time = longDate
@@ -39,7 +41,7 @@ class MainPresent : BasePresent(){
                                 sms.type = intType
                                 DBHelper.instance.saveSmsOrigin(sms)
                                 LogW.i("saveSmsOrigin >> strAddress:$strAddress intPerson:$intPerson " +
-                                        "strbody:$strbody time:${RxTimeTool.milliseconds2String(longDate)} type:$intType")
+                                        "strbody:$strbody time:${RxTimeTool.milliseconds2String(longDate)}($longDate) type:$intType")
                             }else{
                                 LogW.i("saveSmsOrigin repeat >> strAddress:$strAddress")
                             }
@@ -49,11 +51,12 @@ class MainPresent : BasePresent(){
                     }
                 }catch (e:Exception){
                     e.printStackTrace()
-                    return false
+                    PermissionUtil.showPerrmissionErrorTips(false,"读取短信权限",null)
+                    return -1
                 }
-                return true
+                return readCount
             }
-            override fun onPostExecute(target: ReqCallback<Boolean>, result: Boolean) {
+            override fun onPostExecute(target: ReqCallback<Int>, result: Int) {
                 target.onNetResp(result)
             }
         }.executeParallel()
@@ -61,5 +64,9 @@ class MainPresent : BasePresent(){
 
     fun getSmsOrignFromDb():List<SmsOrginEntity>{
         return ArrayList()
+    }
+
+    fun getSmsTotal():Long{
+        return DBHelper.instance.getSmsTotal();
     }
 }
