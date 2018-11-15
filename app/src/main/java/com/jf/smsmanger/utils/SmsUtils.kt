@@ -3,6 +3,7 @@ package com.jf.smsmanger.utils
 import android.database.Cursor
 import android.net.Uri
 import com.haozi.zxwlpro.base.MyApplication
+import com.jf.smsmanger.R
 import com.vondear.rxtool.view.RxToast
 
 object SmsUtils {
@@ -14,6 +15,8 @@ object SmsUtils {
     val SMS_URI_OUTBOX = "content://sms/outbox" // 发件箱
     val SMS_URI_FAILED = "content://sms/failed" // 发送失败
     val SMS_URI_QUEUED = "content://sms/queued" // 待发送列表
+
+    val cmpArray = MyApplication.instance.resources.getStringArray(R.array.company)
 
     fun getSmsCursor():Cursor?{
         try {
@@ -30,5 +33,47 @@ object SmsUtils {
             RxToast.error("读取短信权限不足，请允许本应用的短信读取权限")
         }
         return null
+    }
+
+    fun getWayName(content:String):String{
+        if(content.isNullOrEmpty()){
+            return ""
+        }
+        if(content.startsWith("【")){
+            var index = content.indexOfFirst { it == '】' }
+            if(index > 0){
+                return content.substring(0,index)
+            }
+        }
+        return ""
+    }
+
+    fun getCompany(content:String):String{
+        if(content.isNullOrEmpty()){
+            return ""
+        }
+        for (item in cmpArray){
+            if(content.contains(item)){
+                if(item.length <= 2){
+                    return item + "快递"
+                }
+                return item
+            }
+        }
+        return ""
+    }
+
+    fun getCodeNum(content:String):String{
+        if(content.isNullOrEmpty()){
+            return ""
+        }
+        return ""
+    }
+
+    fun getPhoneNum(content:String):String{
+        if(content.isNullOrEmpty()){
+            return ""
+        }
+        return ""
     }
 }

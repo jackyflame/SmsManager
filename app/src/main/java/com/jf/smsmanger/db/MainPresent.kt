@@ -1,12 +1,14 @@
 package com.jf.smsmanger.db
 
 import com.haozi.greendaolib.SmsOrginEntity
+import com.haozi.zxwlpro.base.MyApplication
 import com.jf.baselibraray.db.BasePresent
 import com.jf.baselibraray.db.WeakAsyncTask
 import com.jf.baselibraray.log.LogW
 import com.jf.baselibraray.net.retrofit.ReqCallback
 import com.jf.baselibraray.uitls.PermissionUtil
 import com.jf.baselibraray.view.ErrorDailogActivity
+import com.jf.smsmanger.R
 import com.jf.smsmanger.utils.SmsUtils
 import com.vondear.rxtool.RxTimeTool
 
@@ -39,15 +41,14 @@ class MainPresent : BasePresent(){
                                 sms.person = intPerson
                                 sms.address = strAddress
                                 sms.type = intType
-                                DBHelper.instance.saveSmsOrigin(sms)
-                                LogW.i("saveSmsOrigin >> strAddress:$strAddress intPerson:$intPerson " +
-                                        "strbody:$strbody time:${RxTimeTool.milliseconds2String(longDate)}($longDate) type:$intType")
+                                sms.id = DBHelper.instance.saveSmsOrigin(sms)
+                                checkSaveKdSms(sms)
                             }else{
                                 LogW.i("saveSmsOrigin repeat >> strAddress:$strAddress")
                             }
                             readCount++
                         }
-                        LogW.i("sms read >> size:${readCount}")
+                        LogW.i("sms read >> size:$readCount")
                     }
                 }catch (e:Exception){
                     e.printStackTrace()
@@ -60,6 +61,13 @@ class MainPresent : BasePresent(){
                 target.onNetResp(result)
             }
         }.executeParallel()
+    }
+
+    fun checkSaveKdSms(sms:SmsOrginEntity){
+        if(sms.content.startsWith("【") && (sms.content.contains("快递") || sms.content.contains("外卖")
+                    || sms.content.contains("物流") || sms.content.contains("包裹"))){
+            DBHelper.instance.saveKdSmsInfo(sms)
+        }
     }
 
     fun getSmsOrignFromDb():List<SmsOrginEntity>{

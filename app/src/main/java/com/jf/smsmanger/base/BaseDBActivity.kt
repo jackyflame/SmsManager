@@ -68,17 +68,16 @@ open class BaseDBActivity<X:ViewDataBinding, T: BaseVM<out BasePresent>> : AppCo
             setSupportActionBar(toolbar)
             if (supportActionBar != null) {
                 supportActionBar?.setDisplayHomeAsUpEnabled(homeAsUp)
-                //if (homeAsUp == false) {
-                //    toolbar.setNavigationIcon(R.drawable.ic_arrow_back_selector);
-                //}
             }
             if (titlebar != null) {
                 //设置标题
                 if(titleRes > 0){
                     titlebar.setText(titleRes)
                     titlebar.setBackgroundColor(resources.getColor(R.color.transparent))
+                }else{
+                    titlebar.text = toolbar?.title
+                    toolbar?.title = ""
                 }
-                toolbar?.title = ""
                 supportActionBar?.setDisplayShowTitleEnabled(false)
             }
         }

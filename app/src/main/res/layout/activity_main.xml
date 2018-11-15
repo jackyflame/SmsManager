@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <include layout="@layout/layout_titlebar_transparent"/>
+        <include layout="@layout/layout_titlebar"/>
 
         <FrameLayout
             android:id="@+id/fram_realtabcontent"

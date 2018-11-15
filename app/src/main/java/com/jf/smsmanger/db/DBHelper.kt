@@ -1,9 +1,12 @@
 package com.jf.smsmanger.db
 
 import com.haozi.greendaolib.DaoManager
+import com.haozi.greendaolib.KdSmsEntity
 import com.haozi.greendaolib.SmsOrginEntity
 import com.haozi.greendaolib.SmsOrginEntityDao
 import com.jf.baselibraray.log.LogW
+import com.jf.smsmanger.utils.SmsUtils
+import com.vondear.rxtool.RxTimeTool
 
 /**
  * Created by Android Studio.
@@ -49,16 +52,53 @@ class DBHelper private constructor() {
         return list[0]
     }
 
-    fun saveSmsOrigin(cache:SmsOrginEntity?){
-        if(cache == null){
-            return
+    fun saveSmsOrigin(sms:SmsOrginEntity?):Long{
+        if(sms == null){
+            return -1
         }
-        try{
-            DaoManager.getInstance().daoSession.insertOrReplace(cache)
-            LogW.e("[DB] saveSmsOrigin success")
+        return try{
+            sms.id = DaoManager.getInstance().daoSession.insertOrReplace(sms)
+            LogW.i("[DB] saveSmsOrigin >> id:${sms.id} address:${sms.address} person:${sms.person} " +
+                    "content:${sms.content} time:${RxTimeTool.milliseconds2String(sms.time)}(${sms.time}) type:${sms.type}")
+            sms.id
         }catch (e:Exception){
             LogW.e("[DB] saveSmsOrigin error:${e.message}")
+            -1
         }
+    }
 
+    fun saveKdSmsInfo(sms:SmsOrginEntity?):Long{
+        if(sms == null || sms.id == null || sms.id <= 0){
+            LogW.e("[DB] saveKdSmsInfo error: sms is error or empty")
+        }
+        var entity = KdSmsEntity()
+        entity.smsEntityId = sms!!.id
+        entity.msgTime = sms.time
+        //通道
+        entity.smsWayName = SmsUtils.getWayName(sms.content)
+        //快递公司
+        entity.companyName = SmsUtils.getCompany(sms.content)
+        //编号
+        entity.codeNum = SmsUtils.getCodeNum(sms.content)
+        //联系电话
+        entity.contractNum = SmsUtils.getPhoneNum(sms.content)
+
+        return -1
+    }
+
+    fun saveKdSmsInfo(entity:KdSmsEntity?):Long{
+        if(entity == null){
+            return -1
+        }
+        return try{
+            entity.id =  DaoManager.getInstance().daoSession.insertOrReplace(entity)
+            LogW.i("[DB] saveKdSmsInfo success>>> id:${entity.id} companyName:${entity.companyName} smsWayName:${entity.smsWayName} " +
+                    "codeNum:${entity.codeNum} contractNum:${entity.contractNum} takeMark:${entity.takeMark} takeTime:${entity.takeTime} " +
+                    "msgTime:${entity.msgTime} smsEntityId:${entity.smsEntityId}")
+            entity.id
+        }catch (e:Exception){
+            LogW.e("[DB] saveKdSmsInfo error:${e.message}")
+            -1
+        }
     }
 }

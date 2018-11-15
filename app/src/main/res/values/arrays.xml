@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="company">
+        <item>圆通</item>
+        <item>韵达</item>
+        <item>百世</item>
+        <item>申通</item>
+        <item>顺风</item>
+        <item>东骏快捷</item>
+        <item>邮政</item>
+        <item>天天快递</item>
+        <item>中通</item>
+    </string-array>
+</resources>
