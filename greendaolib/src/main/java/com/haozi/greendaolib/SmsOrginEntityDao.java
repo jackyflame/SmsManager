@@ -22,7 +22,7 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Content = new Property(1, String.class, "content", false, "CONTENT");
         public final static Property Type = new Property(2, int.class, "type", false, "TYPE");
         public final static Property Time = new Property(3, long.class, "time", false, "TIME");
@@ -43,7 +43,7 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"SMS_ORGIN_ENTITY\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"CONTENT\" TEXT," + // 1: content
                 "\"TYPE\" INTEGER NOT NULL ," + // 2: type
                 "\"TIME\" INTEGER NOT NULL ," + // 3: time
@@ -60,7 +60,11 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, SmsOrginEntity entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String content = entity.getContent();
         if (content != null) {
@@ -79,7 +83,11 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, SmsOrginEntity entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String content = entity.getContent();
         if (content != null) {
@@ -97,13 +105,13 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public SmsOrginEntity readEntity(Cursor cursor, int offset) {
         SmsOrginEntity entity = new SmsOrginEntity( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // content
             cursor.getInt(offset + 2), // type
             cursor.getLong(offset + 3), // time
@@ -115,7 +123,7 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
      
     @Override
     public void readEntity(Cursor cursor, SmsOrginEntity entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setContent(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setType(cursor.getInt(offset + 2));
         entity.setTime(cursor.getLong(offset + 3));
@@ -140,7 +148,7 @@ public class SmsOrginEntityDao extends AbstractDao<SmsOrginEntity, Long> {
 
     @Override
     public boolean hasKey(SmsOrginEntity entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

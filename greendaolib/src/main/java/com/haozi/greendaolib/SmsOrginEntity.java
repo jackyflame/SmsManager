@@ -15,14 +15,14 @@ import org.greenrobot.greendao.annotation.Generated;
 public class SmsOrginEntity {
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
     private String content;
     private int type;
     private long time;
     private int person;
     private String address;
-    @Generated(hash = 1235076097)
-    public SmsOrginEntity(long id, String content, int type, long time, int person,
+    @Generated(hash = 1439300970)
+    public SmsOrginEntity(Long id, String content, int type, long time, int person,
             String address) {
         this.id = id;
         this.content = content;
@@ -34,10 +34,10 @@ public class SmsOrginEntity {
     @Generated(hash = 1836532971)
     public SmsOrginEntity() {
     }
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getContent() {
@@ -70,5 +70,6 @@ public class SmsOrginEntity {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
 }
