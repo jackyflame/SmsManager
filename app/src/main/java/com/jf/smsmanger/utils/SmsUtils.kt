@@ -5,6 +5,8 @@ import android.net.Uri
 import com.haozi.zxwlpro.base.MyApplication
 import com.jf.smsmanger.R
 import com.vondear.rxtool.view.RxToast
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 object SmsUtils {
 
@@ -67,13 +69,29 @@ object SmsUtils {
         if(content.isNullOrEmpty()){
             return ""
         }
-        return ""
+        return getMatcher(content,"(凭“|“|取货码)?([A-Z]|[a-z])?[0-9]+(-)?[0-9]*(-)?[0-9]*(”)?")
     }
 
     fun getPhoneNum(content:String):String{
         if(content.isNullOrEmpty()){
             return ""
         }
+        return getMatcher(content,"[1][3,4,5,6,7,8,9][0-9]{9}")
+    }
+
+    /**
+     * 返回单个字符串，若匹配到多个的话就返回第一个，方法与getSubUtil一样
+     * @param soap
+     * @param rgex
+     * @return
+     */
+    fun getMatcher(source:String,rgex:String):String{
+        var pattern = Pattern.compile(rgex) // 匹配的模式
+        var m = pattern.matcher(source)
+        while(m.find()){
+            return m.group(1)
+        }
         return ""
     }
+
 }
