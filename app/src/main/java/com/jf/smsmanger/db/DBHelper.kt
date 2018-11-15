@@ -26,6 +26,10 @@ class DBHelper private constructor() {
         return DaoManager.getInstance().daoSession.smsOrginEntityDao.queryBuilder().count()
     }
 
+    fun getSmsList():List<SmsOrginEntity>{
+        return DaoManager.getInstance().daoSession.smsOrginEntityDao.queryBuilder().list()
+    }
+
     fun getSmsOrgin(time:Long,content:String?,person:Int,strAddress:String?):SmsOrginEntity?{
         var queryBuilder = DaoManager.getInstance().daoSession.smsOrginEntityDao.queryBuilder()
         queryBuilder.where(SmsOrginEntityDao.Properties.Time.eq(time))

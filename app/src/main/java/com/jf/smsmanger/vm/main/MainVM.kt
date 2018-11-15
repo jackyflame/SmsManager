@@ -1,6 +1,7 @@
 package com.jf.smsmanger.vm.main
 
 import android.databinding.Bindable
+import com.haozi.greendaolib.SmsOrginEntity
 import com.jf.baselibraray.event.HttpEvent
 import com.jf.baselibraray.log.LogW
 import com.jf.baselibraray.net.retrofit.ReqCallback
@@ -23,7 +24,8 @@ class MainVM(private var mActivity: MainActivity): BaseVM<MainPresent>(MainPrese
     init{
         this.mActivity = mActivity
 
-        LogW.i("------------------------->>>> total: ${mPresent?.getSmsTotal()}")
+        var list = mPresent?.getSmsOrignFromDb();
+        LogW.i("------------------------->>>> total: ${list?.size}")
 
         mPresent?.readSmsToDb(object :ReqCallback<Int>{
             override fun onReqStart() { }

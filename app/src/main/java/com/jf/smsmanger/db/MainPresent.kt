@@ -63,10 +63,10 @@ class MainPresent : BasePresent(){
     }
 
     fun getSmsOrignFromDb():List<SmsOrginEntity>{
-        return ArrayList()
+        return DBHelper.instance.getSmsList()
     }
 
     fun getSmsTotal():Long{
-        return DBHelper.instance.getSmsTotal();
+        return DBHelper.instance.getSmsTotal()
     }
 }
