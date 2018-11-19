@@ -13,11 +13,11 @@ import com.jf.baselibraray.event.HttpEvent
 import com.jf.baselibraray.net.retrofit.ReqCallback
 import com.jf.smsmanger.BR
 import com.jf.smsmanger.base.vm.BaseVM
-import com.jf.smsmanger.net.BaseNetEntity
 import com.jf.smsmanger.utils.Constants
-import java.util.ArrayList
+import com.vondear.rxtool.view.RxToast
+import com.vondear.rxui.view.dialog.RxDialogLoading
 
-abstract class BaseSwipListVM<T:BaseQuickAdapter<out Any,out BaseViewHolder>>(var context:Context):BaseVM<BasePresent>() {
+abstract class BaseSwipeListVM<X : BasePresent, P, T : BaseQuickAdapter<P,BaseViewHolder>>(var context:Context, var present:X) : BaseVM<BasePresent>(present) {
     var nowPage = 1
     var nomoreData = true
     var mCurPage = 1
@@ -81,38 +81,34 @@ abstract class BaseSwipListVM<T:BaseQuickAdapter<out Any,out BaseViewHolder>>(va
         }
     }
 
-    protected inner class PageCallback<X : BaseNetEntity> constructor(
-            var nowPage: Int = 1,
-            var activity: Activity? = null
-        ) : ReqCallback<ArrayList<X>> {
+    protected inner class PageCallback constructor(nowPage: Int = 1,activity: Activity? = null) : ReqCallback<List<P>> {
 
-//        private var promptDialog: PromptDialog? = null
+        private var promptDialog: RxDialogLoading? = null
 
         init {
             if (activity != null) {
-//                promptDialog = PromptDialog(activity)
+                promptDialog = RxDialogLoading(activity)
             }
         }
 
         override fun onReqStart() {
             nomoreData = false
-//            if (promptDialog != null) {
-//                promptDialog!!.showLoading("加载中")
-//            }
+            if (promptDialog != null) {
+                promptDialog!!.setLoadingText("加载中")
+                promptDialog!!.show()            }
         }
 
-        override fun onNetResp(response: ArrayList<X>?) {
-//            if (promptDialog != null) {
-//                promptDialog!!.dismissImmediately()
-//            }
+        override fun onNetResp(response: List<P>?) {
+            if (promptDialog != null) {
+                promptDialog!!.dismiss()
+            }
             adapter?.loadMoreComplete()
-            //adapter.setUpFetching(false);
             //检查并设置是否还有后续数据
             if (response == null || response.size < Constants.PAGE_SIZE) {
                 nomoreData = true
             }
             //更新当前页
-            if (response != null && response.size > 0) {
+            if (response != null && response.isNotEmpty()) {
                 mCurPage = nowPage
             }
             //刷新数据
@@ -124,13 +120,11 @@ abstract class BaseSwipListVM<T:BaseQuickAdapter<out Any,out BaseViewHolder>>(va
         }
 
         override fun onReqError(httpEvent: HttpEvent) {
-//            if (promptDialog != null) {
-//                promptDialog!!.dismissImmediately()
-//                promptDialog!!.getDefaultBuilder().loadingDuration(1500)
-//                promptDialog!!.showError("加载失败：" + httpEvent.getMessage())
-//            }
+            if (promptDialog != null) {
+                promptDialog!!.dismiss()
+                RxToast.error("加载失败：" + httpEvent.message)
+            }
             adapter?.loadMoreFail()
-            //adapter.setUpFetching(false);
             //清理数据
             if (nowPage == 1) {
                 adapter?.setNewData(null)
