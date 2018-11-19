@@ -1,12 +1,10 @@
 package com.jf.smsmanger.db
 
-import com.haozi.greendaolib.DaoManager
-import com.haozi.greendaolib.KdSmsEntity
-import com.haozi.greendaolib.SmsOrginEntity
-import com.haozi.greendaolib.SmsOrginEntityDao
+import com.haozi.greendaolib.*
 import com.jf.baselibraray.log.LogW
 import com.jf.smsmanger.utils.SmsUtils
 import com.vondear.rxtool.RxTimeTool
+import org.greenrobot.greendao.database.Database
 
 /**
  * Created by Android Studio.
@@ -23,6 +21,14 @@ class DBHelper private constructor() {
 
     companion object {
         val instance: DBHelper by lazy { Holder.INSTANCE }
+    }
+
+    fun getDaoSession(): DaoSession {
+        return DaoManager.getInstance().daoSession
+    }
+
+    fun getDatabase(): Database {
+        return DaoManager.getInstance().daoSession.database
     }
 
     fun getSmsTotal():Long{
