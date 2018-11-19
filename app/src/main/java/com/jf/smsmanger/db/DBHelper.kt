@@ -74,6 +74,7 @@ class DBHelper private constructor() {
         var entity = KdSmsEntity()
         entity.smsEntityId = sms!!.id
         entity.msgTime = sms.time
+        entity.smsContent = sms.content
         //通道
         entity.smsWayName = SmsUtils.getWayName(sms.content)
         //快递公司
@@ -83,7 +84,7 @@ class DBHelper private constructor() {
         //联系电话
         entity.contractNum = SmsUtils.getPhoneNum(sms.content)
 
-        return -1
+        return saveKdSmsInfo(entity)
     }
 
     fun saveKdSmsInfo(entity:KdSmsEntity?):Long{

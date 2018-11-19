@@ -31,9 +31,11 @@ public class KdSmsEntityDao extends AbstractDao<KdSmsEntity, Long> {
         public final static Property CodeNum = new Property(3, String.class, "codeNum", false, "CODE_NUM");
         public final static Property ContractNum = new Property(4, String.class, "contractNum", false, "CONTRACT_NUM");
         public final static Property TakeMark = new Property(5, String.class, "takeMark", false, "TAKE_MARK");
-        public final static Property TakeTime = new Property(6, long.class, "takeTime", false, "TAKE_TIME");
-        public final static Property MsgTime = new Property(7, long.class, "msgTime", false, "MSG_TIME");
-        public final static Property SmsEntityId = new Property(8, Long.class, "smsEntityId", false, "SMS_ENTITY_ID");
+        public final static Property SmsContent = new Property(6, String.class, "smsContent", false, "SMS_CONTENT");
+        public final static Property Remark = new Property(7, String.class, "remark", false, "REMARK");
+        public final static Property TakeTime = new Property(8, long.class, "takeTime", false, "TAKE_TIME");
+        public final static Property MsgTime = new Property(9, long.class, "msgTime", false, "MSG_TIME");
+        public final static Property SmsEntityId = new Property(10, Long.class, "smsEntityId", false, "SMS_ENTITY_ID");
     }
 
     private DaoSession daoSession;
@@ -58,9 +60,11 @@ public class KdSmsEntityDao extends AbstractDao<KdSmsEntity, Long> {
                 "\"CODE_NUM\" TEXT," + // 3: codeNum
                 "\"CONTRACT_NUM\" TEXT," + // 4: contractNum
                 "\"TAKE_MARK\" TEXT," + // 5: takeMark
-                "\"TAKE_TIME\" INTEGER NOT NULL ," + // 6: takeTime
-                "\"MSG_TIME\" INTEGER NOT NULL ," + // 7: msgTime
-                "\"SMS_ENTITY_ID\" INTEGER UNIQUE );"); // 8: smsEntityId
+                "\"SMS_CONTENT\" TEXT," + // 6: smsContent
+                "\"REMARK\" TEXT," + // 7: remark
+                "\"TAKE_TIME\" INTEGER NOT NULL ," + // 8: takeTime
+                "\"MSG_TIME\" INTEGER NOT NULL ," + // 9: msgTime
+                "\"SMS_ENTITY_ID\" INTEGER UNIQUE );"); // 10: smsEntityId
     }
 
     /** Drops the underlying database table. */
@@ -102,12 +106,22 @@ public class KdSmsEntityDao extends AbstractDao<KdSmsEntity, Long> {
         if (takeMark != null) {
             stmt.bindString(6, takeMark);
         }
-        stmt.bindLong(7, entity.getTakeTime());
-        stmt.bindLong(8, entity.getMsgTime());
+ 
+        String smsContent = entity.getSmsContent();
+        if (smsContent != null) {
+            stmt.bindString(7, smsContent);
+        }
+ 
+        String remark = entity.getRemark();
+        if (remark != null) {
+            stmt.bindString(8, remark);
+        }
+        stmt.bindLong(9, entity.getTakeTime());
+        stmt.bindLong(10, entity.getMsgTime());
  
         Long smsEntityId = entity.getSmsEntityId();
         if (smsEntityId != null) {
-            stmt.bindLong(9, smsEntityId);
+            stmt.bindLong(11, smsEntityId);
         }
     }
 
@@ -144,12 +158,22 @@ public class KdSmsEntityDao extends AbstractDao<KdSmsEntity, Long> {
         if (takeMark != null) {
             stmt.bindString(6, takeMark);
         }
-        stmt.bindLong(7, entity.getTakeTime());
-        stmt.bindLong(8, entity.getMsgTime());
+ 
+        String smsContent = entity.getSmsContent();
+        if (smsContent != null) {
+            stmt.bindString(7, smsContent);
+        }
+ 
+        String remark = entity.getRemark();
+        if (remark != null) {
+            stmt.bindString(8, remark);
+        }
+        stmt.bindLong(9, entity.getTakeTime());
+        stmt.bindLong(10, entity.getMsgTime());
  
         Long smsEntityId = entity.getSmsEntityId();
         if (smsEntityId != null) {
-            stmt.bindLong(9, smsEntityId);
+            stmt.bindLong(11, smsEntityId);
         }
     }
 
@@ -173,9 +197,11 @@ public class KdSmsEntityDao extends AbstractDao<KdSmsEntity, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // codeNum
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // contractNum
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // takeMark
-            cursor.getLong(offset + 6), // takeTime
-            cursor.getLong(offset + 7), // msgTime
-            cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8) // smsEntityId
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // smsContent
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // remark
+            cursor.getLong(offset + 8), // takeTime
+            cursor.getLong(offset + 9), // msgTime
+            cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10) // smsEntityId
         );
         return entity;
     }
@@ -188,9 +214,11 @@ public class KdSmsEntityDao extends AbstractDao<KdSmsEntity, Long> {
         entity.setCodeNum(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setContractNum(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setTakeMark(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setTakeTime(cursor.getLong(offset + 6));
-        entity.setMsgTime(cursor.getLong(offset + 7));
-        entity.setSmsEntityId(cursor.isNull(offset + 8) ? null : cursor.getLong(offset + 8));
+        entity.setSmsContent(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setRemark(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setTakeTime(cursor.getLong(offset + 8));
+        entity.setMsgTime(cursor.getLong(offset + 9));
+        entity.setSmsEntityId(cursor.isNull(offset + 10) ? null : cursor.getLong(offset + 10));
      }
     
     @Override

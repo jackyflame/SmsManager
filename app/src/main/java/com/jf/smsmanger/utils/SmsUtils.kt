@@ -69,14 +69,16 @@ object SmsUtils {
         if(content.isNullOrEmpty()){
             return ""
         }
-        return getMatcher(content,"(凭“|“|取货码)?([A-Z]|[a-z])?[0-9]+(-)?[0-9]*(-)?[0-9]*(”)?")
+        return ""
+        //return getMatcher(content,"(凭“|“|取货码)?([A-Z]|[a-z])?[0-9]+(-)?[0-9]*(-)?[0-9]*(”)?")
     }
 
     fun getPhoneNum(content:String):String{
         if(content.isNullOrEmpty()){
             return ""
         }
-        return getMatcher(content,"[1][3,4,5,6,7,8,9][0-9]{9}")
+        return ""
+        //return getMatcher(content,"[1][3,4,5,6,7,8,9][0-9]{9}")
     }
 
     /**

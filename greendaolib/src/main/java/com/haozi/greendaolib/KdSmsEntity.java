@@ -18,6 +18,10 @@ public class KdSmsEntity {
     private String contractNum;
     /**取件标记*/
     private String takeMark;
+    /**短信内容*/
+    private String smsContent;
+    /**备注*/
+    private String remark;
     /**取件时间*/
     private long takeTime;
     /**短信到达时间*/
@@ -34,16 +38,18 @@ public class KdSmsEntity {
     /** Used for active entity operations. */
     @Generated(hash = 1848379649)
     private transient KdSmsEntityDao myDao;
-    @Generated(hash = 1554837273)
+    @Generated(hash = 219882273)
     public KdSmsEntity(Long id, String companyName, String smsWayName,
-            String codeNum, String contractNum, String takeMark, long takeTime,
-            long msgTime, Long smsEntityId) {
+            String codeNum, String contractNum, String takeMark, String smsContent,
+            String remark, long takeTime, long msgTime, Long smsEntityId) {
         this.id = id;
         this.companyName = companyName;
         this.smsWayName = smsWayName;
         this.codeNum = codeNum;
         this.contractNum = contractNum;
         this.takeMark = takeMark;
+        this.smsContent = smsContent;
+        this.remark = remark;
         this.takeTime = takeTime;
         this.msgTime = msgTime;
         this.smsEntityId = smsEntityId;
@@ -86,6 +92,18 @@ public class KdSmsEntity {
     }
     public void setTakeMark(String takeMark) {
         this.takeMark = takeMark;
+    }
+    public String getSmsContent() {
+        return this.smsContent;
+    }
+    public void setSmsContent(String smsContent) {
+        this.smsContent = smsContent;
+    }
+    public String getRemark() {
+        return this.remark;
+    }
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
     public long getTakeTime() {
         return this.takeTime;
@@ -174,5 +192,6 @@ public class KdSmsEntity {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getKdSmsEntityDao() : null;
     }
+   
   
 }
