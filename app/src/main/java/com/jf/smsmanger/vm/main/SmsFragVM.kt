@@ -1,14 +1,18 @@
 package com.jf.smsmanger.vm.main
 
-import android.app.Activity
-import com.haozi.greendaolib.KdSmsEntity
 import com.jf.smsmanger.base.BaseSwipeListVM
 import com.jf.smsmanger.db.SmsPresent
 import com.jf.smsmanger.ui.main.SmsFragAdapter
+import com.jf.smsmanger.ui.main.SmsFragment
 
-class SmsFragVM(var activity: Activity) : BaseSwipeListVM<SmsPresent, KdSmsEntity, SmsFragAdapter>(activity, SmsPresent()) {
+class SmsFragVM(var fragment: SmsFragment) : BaseSwipeListVM<SmsPresent, String, SmsFragAdapter>(fragment.context!!, SmsPresent()) {
 
-    override fun refreshData(page: Int) {
+    init {
+        adapter = SmsFragAdapter()
+    }
+
+    public override fun refreshData(page: Int) {
+        adapter?.setNewData(present.listWayName())
     }
 
 }

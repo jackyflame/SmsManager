@@ -44,7 +44,7 @@ object SmsUtils {
         if(content.startsWith("【")){
             var index = content.indexOfFirst { it == '】' }
             if(index > 0){
-                return content.substring(0,index)
+                return content.substring(1,index)
             }
         }
         return ""

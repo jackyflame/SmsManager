@@ -3,7 +3,6 @@ package com.jf.smsmanger.db
 import com.haozi.greendaolib.KdSmsEntityDao
 import com.jf.baselibraray.db.BasePresent
 
-
 class SmsPresent : BasePresent() {
 
     fun listWayName(): List<String> {
@@ -19,6 +18,7 @@ class SmsPresent : BasePresent() {
         } finally {
             c.close()
         }
+        result.add("普通短信")
         return result
     }
 
