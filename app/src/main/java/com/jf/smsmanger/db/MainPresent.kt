@@ -67,6 +67,8 @@ class MainPresent : BasePresent(){
         if(sms.content.startsWith("【") && (sms.content.contains("快递") || sms.content.contains("外卖")
                     || sms.content.contains("物流") || sms.content.contains("包裹"))){
             DBHelper.instance.saveKdSmsInfo(sms)
+        }else{
+
         }
     }
 

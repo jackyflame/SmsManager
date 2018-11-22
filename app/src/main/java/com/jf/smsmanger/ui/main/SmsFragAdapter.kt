@@ -8,7 +8,7 @@ import com.jf.smsmanger.net.WayTypeEntity
 class SmsFragAdapter : BaseQuickAdapter<WayTypeEntity, BaseViewHolder>(R.layout.list_cell_wayname) {
 
     override fun convert(helper: BaseViewHolder?, item: WayTypeEntity?) {
-        var title = (item?.name ?: "" + "(${item?.count})")
+        var title = "${item?.name?:""} (${item?.count})"
         helper?.setText(R.id.txv_title, title)
     }
 

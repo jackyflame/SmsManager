@@ -93,6 +93,26 @@ class DBHelper private constructor() {
         return saveKdSmsInfo(entity)
     }
 
+    fun savePtSmsInfo(sms:SmsOrginEntity?):Long{
+        if(sms == null || sms.id == null || sms.id <= 0){
+            LogW.e("[DB] saveKdSmsInfo error: sms is error or empty")
+        }
+        var entity = KdSmsEntity()
+        entity.smsEntityId = sms!!.id
+        entity.msgTime = sms.time
+        entity.smsContent = sms.content
+        //通道
+        entity.smsWayName = "普通短信"
+        //快递公司
+        entity.companyName = SmsUtils.getCompany(sms.content)
+        //编号
+        entity.codeNum = SmsUtils.getCodeNum(sms.content)
+        //联系电话
+        entity.contractNum = SmsUtils.getPhoneNum(sms.content)
+
+        return saveKdSmsInfo(entity)
+    }
+
     fun saveKdSmsInfo(entity:KdSmsEntity?):Long{
         if(entity == null){
             return -1

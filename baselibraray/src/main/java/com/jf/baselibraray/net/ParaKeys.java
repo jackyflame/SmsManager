@@ -13,4 +13,7 @@ public interface ParaKeys {
     String DIALOG_AUTHORIGHT_JUMP = "DIALOG_AUTHORIGHT_JUMP";
     String DIALOG_AUTHORIGHT_TAG = "DIALOG_AUTHORIGHT_TAG";
 
+    String EXTRA_STRING = "EXTRA_STRING";
+    String EXTRA_ID = "EXTRA_ID";
+
 }
