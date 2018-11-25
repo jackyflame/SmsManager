@@ -26,6 +26,7 @@ class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, Kd
                         present.updateSmsTakeState(item,false)
                         refreshData(1)
                     }
+                    dialog.show()
                 }
             }
             override fun take(item: KdSmsEntity?) {
@@ -39,6 +40,7 @@ class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, Kd
                         present.updateSmsTakeState(item,true)
                         refreshData(1)
                     }
+                    dialog.show()
                 }
             }
         }
