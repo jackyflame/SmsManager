@@ -17,7 +17,7 @@ class SmsFragVM(var fragment: SmsFragment) : BaseSwipeListVM<SmsPresent, WayType
         adapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
             adapter?.getItem(position)?.let {
                 var intent = Intent(fragment.context, SmsListActivity::class.java)
-                intent.putExtra(ParaKeys.EXTRA_STRING,it.name);
+                intent.putExtra(ParaKeys.EXTRA_STRING,it.name)
                 fragment.startActivity(intent)
             }
         }

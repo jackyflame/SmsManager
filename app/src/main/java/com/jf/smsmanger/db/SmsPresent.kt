@@ -1,5 +1,6 @@
 package com.jf.smsmanger.db
 
+import com.haozi.greendaolib.KdSmsEntity
 import com.haozi.greendaolib.KdSmsEntityDao
 import com.jf.baselibraray.db.BasePresent
 import com.jf.smsmanger.net.WayTypeEntity
@@ -44,4 +45,22 @@ class SmsPresent : BasePresent() {
         return result
     }
 
+    fun listSmslistByWayType(typeName:String): List<KdSmsEntity> {
+        var queryBuilder = DBHelper.instance.getDaoSession().kdSmsEntityDao.queryBuilder()
+        queryBuilder
+            .where(KdSmsEntityDao.Properties.SmsWayName.eq(typeName))
+            .orderDesc(KdSmsEntityDao.Properties.MsgTime)
+        return queryBuilder.list()
+    }
+
+    fun updateSmsTakeState(item:KdSmsEntity?,isTake:Boolean){
+        if(isTake){
+            item?.takeMark = "true"
+            item?.takeTime = System.currentTimeMillis()
+        }else{
+            item?.takeMark = ""
+            item?.takeTime = 0
+        }
+        DBHelper.instance.getDaoSession().kdSmsEntityDao.update(item)
+    }
 }
