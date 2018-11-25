@@ -12,7 +12,7 @@ class SmsListActivity : BaseDBActivity<ActivitySmslistBinding, SmsListVM>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindLayout(R.layout.activity_smslist, SmsListVM(this),false)
+        bindLayout(R.layout.activity_smslist, SmsListVM(this),true)
         var wayName = intent.getStringExtra(ParaKeys.EXTRA_STRING)
         if(wayName.isNullOrEmpty()){
             RxToast.error("获取分类失败")
