@@ -1,5 +1,6 @@
 package com.jf.smsmanger.ui.sms
 
+import android.view.View
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -43,6 +44,11 @@ class SmsListAdapter : BaseQuickAdapter<KdSmsEntity, BaseViewHolder>(R.layout.li
             }else{
                 takeListener?.take(item)
             }
+        }
+        if(item?.remark.isNullOrEmpty()){
+            helper?.getView<TextView>(R.id.txv_remark)?.visibility = View.GONE
+        }else{
+            helper?.getView<TextView>(R.id.txv_remark)?.visibility = View.VISIBLE
         }
     }
 
