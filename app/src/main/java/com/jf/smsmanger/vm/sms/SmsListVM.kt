@@ -21,8 +21,8 @@ class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, Kd
                 }else{
                     var dialog = RxDialogSureCancel(activity)
                     dialog.setContent("是否确认取消取件状态")
-                    dialog.setTitle("提醒")
                     dialog.setSureListener {
+                        dialog.dismiss()
                         present.updateSmsTakeState(item,false)
                         refreshData(1)
                     }
@@ -35,8 +35,8 @@ class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, Kd
                 }else{
                     var dialog = RxDialogSureCancel(activity)
                     dialog.setContent("是否确认取件")
-                    dialog.setTitle("提醒")
                     dialog.setSureListener {
+                        dialog.dismiss()
                         present.updateSmsTakeState(item,true)
                         refreshData(1)
                     }
