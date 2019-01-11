@@ -93,6 +93,17 @@ class MainActivity : BaseDBActivity<ActivityMainBinding, MainVM>(), TabHost.OnTa
 
     override fun onTabChanged(tabId: String?) {
         currentTab = mTabHost.currentTab
+        when(currentTab){
+            0->{
+                viewModel?.title = getString(R.string.tab_home_menue)
+            }
+            1->{
+                viewModel?.title = getString(R.string.tab_sms_menue)
+            }
+            2->{
+                viewModel?.title = getString(R.string.tab_user_menue)
+            }
+        }
     }
 
     companion object {

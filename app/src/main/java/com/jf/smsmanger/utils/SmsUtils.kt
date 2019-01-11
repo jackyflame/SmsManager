@@ -5,7 +5,6 @@ import android.net.Uri
 import com.haozi.zxwlpro.base.MyApplication
 import com.jf.smsmanger.R
 import com.vondear.rxtool.view.RxToast
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 object SmsUtils {

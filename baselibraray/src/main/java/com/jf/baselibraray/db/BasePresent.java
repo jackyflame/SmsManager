@@ -9,4 +9,5 @@ package com.jf.baselibraray.db;
  */
 
 public class BasePresent {
+
 }

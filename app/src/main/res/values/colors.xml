@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#87CEFF</color>
     <color name="colorPrimaryDark">#60AAFF</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#008577</color>
 
     <color name="transparent">#00000000</color>
     <color name="translucent_10_black">#19000000</color>
@@ -27,6 +27,7 @@
     <color name="text_blue">#87CEFF</color>
     <color name="text_blue_dark">#67aEFF</color>
     <color name="text_tab_selected">@color/text_blue</color>
+    <color name="text_gray_dark">#858687</color>
 
     <color name="diver">#F9F9F9</color>
     <color name="diver_dark">#cecece</color>

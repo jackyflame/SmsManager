@@ -14,6 +14,8 @@ public interface ParaKeys {
     String DIALOG_AUTHORIGHT_TAG = "DIALOG_AUTHORIGHT_TAG";
 
     String EXTRA_STRING = "EXTRA_STRING";
+    String EXTRA_BOOLEAN = "EXTRA_BOOLEAN";
+    String EXTRA_TAKENMARK = "EXTRA_TAKENMARK";
     String EXTRA_ID = "EXTRA_ID";
 
 }

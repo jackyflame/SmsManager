@@ -1,16 +1,23 @@
 package com.jf.smsmanger.vm.sms
 
 import com.haozi.greendaolib.KdSmsEntity
+import com.jf.smsmanger.R
 import com.jf.smsmanger.base.BaseSwipeListVM
 import com.jf.smsmanger.db.SmsPresent
+import com.jf.smsmanger.db.base.TaskCallback
 import com.jf.smsmanger.ui.sms.SmsListActivity
 import com.jf.smsmanger.ui.sms.SmsListAdapter
+import com.jf.smsmanger.utils.AlertUtils
 import com.vondear.rxtool.view.RxToast
+import com.vondear.rxui.view.RxRoundProgress
 import com.vondear.rxui.view.dialog.RxDialogSureCancel
+import rx.functions.Action1
+import rx.observers.Subscribers
 
 class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, KdSmsEntity, SmsListAdapter>(activity, SmsPresent()) {
 
     var wayName:String= ""
+    var isTaken:Boolean? = null
 
     init {
         adapter = SmsListAdapter()
@@ -19,40 +26,96 @@ class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, Kd
                 if(item == null || item.id == null || item.id <= 0){
                     RxToast.error("参数错误，取消取件失败")
                 }else{
-                    var dialog = RxDialogSureCancel(activity)
-                    dialog.setContent("是否确认取消取件状态")
-                    dialog.setSureListener {
-                        dialog.dismiss()
-                        present.updateSmsTakeState(item,false)
-                        refreshData(1)
-                    }
-                    dialog.show()
+                    AlertUtils.showAlertMsgWithCancle(activity,"是否确认取消取件状态",object:AlertUtils.AlertListener{
+                        override fun onNeutralListener() {}
+                        override fun onNegativeListener() {
+                            present.updateSmsTakeState(item,false)
+                            refreshData(1)
+                        }
+                    })
                 }
             }
             override fun take(item: KdSmsEntity?) {
                 if(item == null || item.id == null || item.id <= 0){
                     RxToast.error("参数错误，取消取件失败")
                 }else{
-                    var dialog = RxDialogSureCancel(activity)
-                    dialog.setContent("是否确认取件")
-                    dialog.setSureListener {
-                        dialog.dismiss()
-                        present.updateSmsTakeState(item,true)
-                        refreshData(1)
-                    }
-                    dialog.show()
+                    AlertUtils.showAlertMsgWithCancle(activity,"是否确认取件",object:AlertUtils.AlertListener{
+                        override fun onNeutralListener() {}
+                        override fun onNegativeListener() {
+                            present.updateSmsTakeState(item,true)
+                            refreshData(1)
+                        }
+                    })
                 }
             }
         }
     }
 
-    public fun refreshData(wayName:String){
+    fun refreshData(wayName:String,isTaken:Boolean?){
         this.wayName = wayName
+        this.isTaken = isTaken
         refreshData(1)
     }
 
-    override fun refreshData(page: Int) {
-        adapter?.setNewData(present.listSmslistByWayType(wayName))
+    public override fun refreshData(page: Int) {
+        adapter?.setNewData(present.listSmslistByWayType(wayName,isTaken))
+    }
+
+    fun showDeletAll() {
+        AlertUtils.showAlertMsgWithCancle(activity, R.string.dia_msg_deleteAll,object :AlertUtils.AlertListener{
+            override fun onNegativeListener() {
+                present.deleteAllByWayType(wayName,isTaken,object :TaskCallback<Boolean>{
+                    override fun onStart() {
+                    }
+                    override fun onSuccess(rst: Boolean) {
+                        RxToast.success("操作成功")
+                        refreshData(wayName,isTaken)
+                    }
+                    override fun onError(exception: Throwable) {
+                        RxToast.error("操作失败")
+                    }
+                })
+            }
+            override fun onNeutralListener() {}
+        })
+    }
+
+    fun showTakenAll() {
+        AlertUtils.showAlertMsgWithCancle(activity,R.string.dia_msg_takenAll,object :AlertUtils.AlertListener{
+            override fun onNegativeListener() {
+                present.takenAllByWayType(wayName,object :TaskCallback<Boolean>{
+                    override fun onStart() {
+                    }
+                    override fun onSuccess(rst: Boolean) {
+                        RxToast.success("操作成功")
+                        refreshData(wayName,isTaken)
+                    }
+                    override fun onError(exception: Throwable) {
+                        RxToast.error("操作失败")
+                    }
+                })
+            }
+            override fun onNeutralListener() {}
+        })
+    }
+
+    fun showResetAll() {
+        AlertUtils.showAlertMsgWithCancle(activity,R.string.dia_msg_untakenAll,object :AlertUtils.AlertListener{
+            override fun onNegativeListener() {
+                present.untakenAllByWayType(wayName,object :TaskCallback<Boolean>{
+                    override fun onStart() {
+                    }
+                    override fun onSuccess(rst: Boolean) {
+                        RxToast.success("操作成功")
+                        refreshData(wayName,isTaken)
+                    }
+                    override fun onError(exception: Throwable) {
+                        RxToast.error("操作失败")
+                    }
+                })
+            }
+            override fun onNeutralListener() {}
+        })
     }
 
 }

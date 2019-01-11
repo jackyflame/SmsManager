@@ -7,4 +7,8 @@
 
     <string name="activity_smslist">短信详情</string>
 
+    <string name="dia_msg_deleteAll">是否删除所有数据？</string>
+    <string name="dia_msg_takenAll">是否将所有数据设置为已取件？</string>
+    <string name="dia_msg_untakenAll">是否重置所有数据为未取件？</string>
+
 </resources>
