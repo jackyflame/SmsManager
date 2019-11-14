@@ -33,7 +33,8 @@ class MainPresent : BasePresent(){
                             val longDate = it.getLong(index_Date)
                             val intType = it.getInt(index_Type)
                             //写入数据库
-                            var sms:SmsOrginEntity? = DBHelper.instance.getSmsOrgin(longDate,strbody,0,strAddress)
+                            //var sms:SmsOrginEntity? = DBHelper.instance.getSmsOrgin(longDate,strbody,0,strAddress)
+                            var sms:SmsOrginEntity? = DBHelper.instance.getSmsOrginByContent(strbody)
                             if(sms == null){
                                 sms = SmsOrginEntity()
                                 sms.time = longDate

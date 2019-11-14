@@ -58,6 +58,15 @@ class DBHelper private constructor() {
         return list[0]
     }
 
+    fun getSmsOrginByContent(content:String?):SmsOrginEntity?{
+        var queryBuilder = DaoManager.getInstance().daoSession.smsOrginEntityDao.queryBuilder()
+        var list = queryBuilder.where(SmsOrginEntityDao.Properties.Content.eq(content)).list()
+        if(list == null || list.size == 0){
+            return null
+        }
+        return list[0]
+    }
+
     fun saveSmsOrigin(sms:SmsOrginEntity?):Long{
         if(sms == null){
             return -1
