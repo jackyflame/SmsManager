@@ -35,7 +35,7 @@ class SmsPresent : TaskPresentKt() {
         val result = ArrayList<WayTypeEntity>()
         var condition = ""
         if(true == isTaken){
-            condition = " WHERE ${KdSmsEntityDao.Properties.TakeMark.columnName} = 'true'"
+            condition = " WHERE (${KdSmsEntityDao.Properties.TakeMark.columnName} = 'true' OR ${KdSmsEntityDao.Properties.TakeMark.columnName} = 'return')"
         }else if(false  == isTaken){
             condition = " WHERE (${KdSmsEntityDao.Properties.TakeMark.columnName} = '' OR ${KdSmsEntityDao.Properties.TakeMark.columnName} IS NULL)"
         }
@@ -64,7 +64,10 @@ class SmsPresent : TaskPresentKt() {
         var queryBuilder = DBHelper.instance.getDaoSession().kdSmsEntityDao.queryBuilder()
         queryBuilder.where(KdSmsEntityDao.Properties.SmsWayName.eq(typeName))
         if(true == isTake){
-            queryBuilder.where(KdSmsEntityDao.Properties.TakeMark.eq("true"))
+            queryBuilder.whereOr(
+                KdSmsEntityDao.Properties.TakeMark.eq("true"),
+                KdSmsEntityDao.Properties.TakeMark.eq("return")
+            )
         }else if(false == isTake){
             queryBuilder.whereOr(
                 KdSmsEntityDao.Properties.TakeMark.isNull,
@@ -78,6 +81,17 @@ class SmsPresent : TaskPresentKt() {
     fun updateSmsTakeState(item:KdSmsEntity?,isTake:Boolean){
         if(isTake){
             item?.takeMark = "true"
+            item?.takeTime = System.currentTimeMillis()
+        }else{
+            item?.takeMark = ""
+            item?.takeTime = 0
+        }
+        DBHelper.instance.getDaoSession().kdSmsEntityDao.update(item)
+    }
+
+    fun updateSmsReturnState(item:KdSmsEntity?,isReturn:Boolean){
+        if(isReturn){
+            item?.takeMark = "return"
             item?.takeTime = System.currentTimeMillis()
         }else{
             item?.takeMark = ""

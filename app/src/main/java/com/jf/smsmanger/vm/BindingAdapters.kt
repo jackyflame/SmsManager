@@ -1,6 +1,7 @@
 package com.jf.smsmanger.vm
 
 import android.databinding.BindingAdapter
+import android.widget.ImageView
 import android.widget.TextView
 
 /**
@@ -21,6 +22,12 @@ class BindingAdapters {
                 return
             }
            view.setTextAppearance(view.context,style)
+        }
+
+        @BindingAdapter("android:src")
+        @JvmStatic
+        fun setSrc(view: ImageView, resId: Int) {
+            view.setImageResource(resId)
         }
 
     }

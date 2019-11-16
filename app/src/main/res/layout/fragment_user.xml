@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.jf.smsmanger.vm.main.UserVM" />
+    </data>
+
+    <LinearLayout
+        android:padding="@dimen/padding_xl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:lineSpacingMultiplier="1.2"
+           android:textSize="@dimen/text_l"
+           android:text="使用短信取件功能请务必打开权限管理中的读取通知短信以及短信权限"/>
+
+    </LinearLayout>
+</layout>

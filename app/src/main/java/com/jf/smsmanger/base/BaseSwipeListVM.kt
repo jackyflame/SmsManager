@@ -6,12 +6,12 @@ import android.databinding.Bindable
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.android.databinding.library.baseAdapters.BR
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.jf.baselibraray.db.BasePresent
 import com.jf.baselibraray.event.HttpEvent
 import com.jf.baselibraray.net.retrofit.ReqCallback
-import com.jf.smsmanger.BR
 import com.jf.smsmanger.base.vm.BaseVM
 import com.jf.smsmanger.utils.Constants
 import com.vondear.rxtool.view.RxToast

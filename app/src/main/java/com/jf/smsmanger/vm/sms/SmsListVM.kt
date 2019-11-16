@@ -37,12 +37,39 @@ class SmsListVM (var activity: SmsListActivity) : BaseSwipeListVM<SmsPresent, Kd
             }
             override fun take(item: KdSmsEntity?) {
                 if(item == null || item.id == null || item.id <= 0){
-                    RxToast.error("参数错误，取消取件失败")
+                    RxToast.error("参数错误，取件失败")
                 }else{
                     AlertUtils.showAlertMsgWithCancle(activity,"是否确认取件",object:AlertUtils.AlertListener{
                         override fun onNeutralListener() {}
                         override fun onNegativeListener() {
                             present.updateSmsTakeState(item,true)
+                            refreshData(1)
+                        }
+                    })
+                }
+            }
+            override fun cancelBack(item: KdSmsEntity?) {
+                if(item == null || item.id == null || item.id <= 0){
+                    RxToast.error("参数错误，取消退回快递失败")
+                }else{
+                    AlertUtils.showAlertMsgWithCancle(activity,"是否确认取消退回快递状态",object:AlertUtils.AlertListener{
+                        override fun onNeutralListener() {}
+                        override fun onNegativeListener() {
+                            present.updateSmsReturnState(item,false)
+                            refreshData(1)
+                        }
+                    })
+                }
+            }
+
+            override fun retrunBack(item: KdSmsEntity?) {
+                if(item == null || item.id == null || item.id <= 0){
+                    RxToast.error("参数错误，退回快递失败")
+                }else{
+                    AlertUtils.showAlertMsgWithCancle(activity,"是否确认退回快递",object:AlertUtils.AlertListener{
+                        override fun onNeutralListener() {}
+                        override fun onNegativeListener() {
+                            present.updateSmsReturnState(item,true)
                             refreshData(1)
                         }
                     })

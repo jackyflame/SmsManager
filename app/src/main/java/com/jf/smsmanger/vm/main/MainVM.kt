@@ -1,14 +1,13 @@
 package com.jf.smsmanger.vm.main
 
 import android.databinding.Bindable
-import com.haozi.greendaolib.SmsOrginEntity
+import com.android.databinding.library.baseAdapters.BR
 import com.jf.baselibraray.event.HttpEvent
 import com.jf.baselibraray.log.LogW
 import com.jf.baselibraray.net.retrofit.ReqCallback
 import com.jf.smsmanger.base.vm.BaseVM
 import com.jf.smsmanger.db.MainPresent
 import com.jf.smsmanger.ui.main.MainActivity
-import com.jf.smsmanger.BR
 import com.vondear.rxtool.view.RxToast
 
 class MainVM(private var mActivity: MainActivity): BaseVM<MainPresent>(MainPresent()) {

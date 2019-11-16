@@ -1,7 +1,6 @@
 package com.jf.smsmanger.ui.main
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import com.haozi.zxwlpro.base.BaseDBFragment
 import com.jf.smsmanger.R
 import com.jf.smsmanger.databinding.FragmentSmsBinding
 import com.jf.smsmanger.vm.main.SmsFragVM
-
 
 
 class SmsFragment : BaseDBFragment<FragmentSmsBinding, SmsFragVM>() {
@@ -26,7 +24,7 @@ class SmsFragment : BaseDBFragment<FragmentSmsBinding, SmsFragVM>() {
         mBinding.tablayoutCondition?.let {
             it.addTab(it.newTab().setText("全部"))
             it.addTab(it.newTab().setText("未取件"))
-            it.addTab(it.newTab().setText("已取件"))
+            it.addTab(it.newTab().setText("已取件/退回"))
             it.addOnTabSelectedListener(viewModel!!.getTabSlectedListener())
         }
         mBinding.tablayoutCondition?.getTabAt(1)?.select()

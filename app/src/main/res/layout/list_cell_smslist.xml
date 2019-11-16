@@ -44,13 +44,26 @@
 
             <TextView
                 android:id="@+id/btn_take"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/dp_4"
                 android:paddingBottom="@dimen/dp_4"
                 android:textSize="@dimen/text_12"
                 android:text="取件"
+                android:textColor="@color/btn_take_text_selector"
+                android:background="@drawable/btn_take_selector"/>
+
+            <TextView
+                android:id="@+id/btn_return_back"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_l"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_4"
+                android:textSize="@dimen/text_12"
+                android:text="退回"
                 android:textColor="@color/btn_take_text_selector"
                 android:background="@drawable/btn_take_selector"/>
 
