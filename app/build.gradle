@@ -23,9 +23,9 @@ android {
     //签名配置
     signingConfigs {
         release {
-            storeFile file("../smsmanager.jks")
+            storeFile file("../smsManager.jks")
             storePassword "666666"
-            keyAlias 'smsmanager'
+            keyAlias 'smsManager'
             keyPassword '666666'
         }
     }
